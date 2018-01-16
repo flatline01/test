@@ -1,18 +1,14 @@
 //requirements
 var fs = require('fs');
 var http = require('http');
-//var router = require('router')
+var router = require('./inc/js/router')
 
 //global vars
 const port=8888;
 const sitename="my awesome site";
 
 http.createServer(function(req, res) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write(renderHeader({}));
-    res.write('<h1>something!</h1>')
-    res.write(renderFooter());
-    res.end();
+    router.get(req, res);
     
 }).listen(port);
 
@@ -30,7 +26,7 @@ function renderHeader(params){
     '<meta charset="utf-8">',
     '<title>'+params.title+'</title>',
     '</head>',
-    '<body>']
+    '<body class="'+params.cssClass+'">']
     .join('');
     
 }
