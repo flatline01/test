@@ -15,7 +15,7 @@ exports.get = function(req, res) {
 var setMimeType = function(res, path){
     //set valid mimetypes
     var validTypes = {
-        css:["text/css", "utf-8"],
+        css:["text/css", "utf8"],
         js:["text/javascript", "utf-8"],
         gif:["image/gif"],
         jpg:["image/jpeg"],
@@ -31,23 +31,23 @@ var setMimeType = function(res, path){
     else if(validTypes[ext] === undefined){
         //non on our list? 404 it
         res.writeHead(404, {'Content-Type': "text/html"});
-        res.write("<h1>Unknown file type. Sorry.</h1>");
+        res.write("<h2>Unknown file type. Sorry.</h2>");
         res.end();
     }
     else{
         //serve it.
         var encType = null;
-        if(validTypes[ext][1]){encType=validTypes[ext][0];}
+        if(validTypes[ext][1]){encType=validTypes[ext][1];}
         //write response, add enc type if necessary
         res.writeHead(200, {'Content-Type': validTypes[ext][0]});
-        console.log("a mime file");
+        console.log("    Requesting a mime file.");
         fs.readFile(__dirname + path, encType, function(err, data) {
             if (err) throw err;
             res.write(data, encType);
             res.end();
           });
         
-        res.end();
+       
     }
 }
 

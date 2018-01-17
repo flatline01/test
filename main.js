@@ -1,7 +1,7 @@
 //requirements
 var fs = require('fs');
 var http = require('http');
-var router = require('./inc/js/router')
+var router = require('./router')
 
 //global vars
 const port=8888;
