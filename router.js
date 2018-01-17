@@ -1,13 +1,14 @@
 //router
 var url = require('url');  
 var fs = require('fs');
+var template = require('./inc/views/_master');
 
 exports.get = function(req, res) {  
     req.requrl = url.parse(req.url, true);
     var path = req.requrl.pathname;
     if(itsNotaMimeType(res, path)){
         res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write("home");
+        res.write(template.build({title:"Hey there!", content:"this is still in progress."}));
         res.end();
     }
 }
@@ -31,11 +32,12 @@ var itsNotaMimeType = function(res, path){
     //no extension? serve as an html
     if(ext ==="" || ext === "/" || ext === "html"){
         //no extention? don't serve a mime file, let the mvc do it's work
-        return true;}
+        return true;
+    }
     else if(validTypes[ext] === undefined){
-        //non on our list? 404 it
+        //not on our list? 415 it
         res.writeHead(415, {'Content-Type': "text/html"});
-        res.write("<h2>Unknown file type. Sorry.</h2>");
+        res.write(template.build({title:"Not Found", content:"Sorry, this is not an allowed mimetype."}));
         res.end();
     }
     else{
