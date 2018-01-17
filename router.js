@@ -17,21 +17,24 @@ var itsNotaMimeType = function(res, path){
     //set valid mimetypes
     let validTypes = {
         css:["text/css", "utf8"],
-        js:["text/javascript", "utf-8"],
+        js:["text/javascript", "utf8"],
         gif:["image/gif"],
         jpg:["image/jpeg"],
-        jpeg: ["image/jpeg"],
+        jpeg:["image/jpeg"],
         png:["image/png"],
-        xml:["text/xml", "utf-8"],
+        xml:["text/xml", "utf8"],
+        svg:["image/svg+xml"],
         
     }
     //lets try and get an extension
     let ext = path.split(".").pop();
     //no extension? serve as an html
-    if(ext ==="" || ext =="/"){return true;}
+    if(ext ==="" || ext === "/" || ext === "html"){
+        //no extention? don't serve a mime file, let the mvc do it's work
+        return true;}
     else if(validTypes[ext] === undefined){
         //non on our list? 404 it
-        res.writeHead(404, {'Content-Type': "text/html"});
+        res.writeHead(415, {'Content-Type': "text/html"});
         res.write("<h2>Unknown file type. Sorry.</h2>");
         res.end();
     }
