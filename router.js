@@ -5,16 +5,17 @@ var fs = require('fs');
 exports.get = function(req, res) {  
     req.requrl = url.parse(req.url, true);
     var path = req.requrl.pathname;
-    if(setMimeType(res, path)){
+    if(itsNotaMimeType(res, path)){
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.write("home");
         res.end();
     }
 }
 
-var setMimeType = function(res, path){
+var itsNotaMimeType = function(res, path){
+    //test the request to see if its a known mime type and serve it
     //set valid mimetypes
-    var validTypes = {
+    let validTypes = {
         css:["text/css", "utf8"],
         js:["text/javascript", "utf-8"],
         gif:["image/gif"],
@@ -25,7 +26,7 @@ var setMimeType = function(res, path){
         
     }
     //lets try and get an extension
-    var ext = path.split(".").pop();
+    let ext = path.split(".").pop();
     //no extension? serve as an html
     if(ext ==="" || ext =="/"){return true;}
     else if(validTypes[ext] === undefined){
@@ -36,18 +37,16 @@ var setMimeType = function(res, path){
     }
     else{
         //serve it.
-        var encType = null;
+        let encType = null;
         if(validTypes[ext][1]){encType=validTypes[ext][1];}
         //write response, add enc type if necessary
         res.writeHead(200, {'Content-Type': validTypes[ext][0]});
-        console.log("    Requesting a mime file.");
+        console.log("    Requesting a "+validTypes[ext][0]+" file.");
         fs.readFile(__dirname + path, encType, function(err, data) {
             if (err) throw err;
             res.write(data, encType);
             res.end();
-          });
-        
-       
+          });      
     }
 }
 
