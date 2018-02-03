@@ -1,0 +1,27 @@
+{
+  "name": "node2018",
+  "version": "1.0.0",
+  "description": "Basic node testing and learning. Nothing remotely interesting here.",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "knex": "^0.14.2",
+    "mysql": "^2.15.0",
+    "pug": "^2.0.0-rc.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flatline01/test.git"
+  },
+  "author": "JPorto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/flatline01/test/issues"
+  },
+  "homepage": "https://github.com/flatline01/test#readme"
+}

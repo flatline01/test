@@ -1,0 +1,9 @@
+html
+  head
+    title= title
+  body
+    h1 this is a pug
+    p its coooool.
+    form(action="/about_posted", method="post")
+        input#send_it(type="text", name="send_it")
+        input(type="submit", value="Submit")
