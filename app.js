@@ -2,18 +2,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const pug = require('pug');
-var knex = require('knex')({
+const knex = require('knex')({
     client: 'mysql',
     connection: {
-      host : '127.0.0.1',
-      user : 'your_database_user',
-      password : 'your_database_password',
-      database : 'myapp_test'
+      host : process.env.DB_HOST || '127.0.0.1',
+      user : process.env.DB_USER || 'root',
+      password : process.env.DB_PASSWORD || 'root',
+      database : process.env.DB_DATABASE || 'test'
     }
-  })
+  });
+var SqlString = require('sqlstring');
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').load();
+    console.log("Dev Server")
+}
 
 //config and defaults
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 //app settings
 const app = express();
@@ -29,9 +34,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/', (req, res) => res.render('home'))
     .get(['/about', '/about_posted'], function (req, res) {
         res.render('about', { title: 'Hey', message: 'Hello there!' })
+        console.log(req.url)
     });
 
 //posts    
 app.post('/about_posted', function (req, res) {
-    res.render('about_posted', {title:'posted!', message:req.body.send_it })
+    knex('user_signup').insert({user_signup_email:req.body.send_it})
+    .returning('id')
+    .then(
+        console.log("added " + req.body.send_it)
+        res.render('about_posted', {title:'posted!', message:req.body })
+    )
+    .catch(function(error) {
+        console.error("Error! " + error)
+        res.render('home', {title:'posted!', message:req.body })
+    });
+    
 });
+
