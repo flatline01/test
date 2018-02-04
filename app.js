@@ -35,19 +35,29 @@ app.get('/', (req, res) => res.render('home'))
     .get(['/about', '/about_posted'], function (req, res) {
         res.render('about', { title: 'Hey', message: 'Hello there!' })
         console.log(req.url)
-    });
+    })
+    .get("/users",function(req,res){
+        knex('user_signup').select("*").from("user_signup")
+        .then(function(users){
+            console.log("got " + users);
+            res.render('users', {title:'users', signedup_users:users})
+        })
+        .catch(function(error) {
+            console.error("Error! " + error)
+        });
+
+    })
+    
 
 //posts    
 app.post('/about_posted', function (req, res) {
     knex('user_signup').insert({user_signup_email:req.body.send_it})
-    .returning('id')
-    .then(
-        console.log("added " + req.body.send_it)
+    .then(function(){
+        console.log("added " + req.body.send_it);
         res.render('about_posted', {title:'posted!', message:req.body })
-    )
+    })
     .catch(function(error) {
         console.error("Error! " + error)
-        res.render('home', {title:'posted!', message:req.body })
     });
     
 });
