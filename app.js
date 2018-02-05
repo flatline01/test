@@ -39,7 +39,6 @@ app.get('/', (req, res) => res.render('home'))
     .get("/users",function(req,res){
         knex('user_signup').select("*").from("user_signup")
         .then(function(users){
-            console.log("got " + users);
             res.render('users', {title:'users', signedup_users:users})
         })
         .catch(function(error) {

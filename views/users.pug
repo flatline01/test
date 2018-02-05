@@ -5,5 +5,11 @@ html
     h1 here are our users
     - var values = signedup_users;
     ul
-    each val in values.length ? values : ['There are no users']
-        li= val.user_signup_email
+        each val in values.length ? values : ['There are no users']
+            li 
+                a(href="#user_id"+val.iduser_signup, id=val.iduser_signup)
+                    span= val.user_signup_email
+    p.
+        this is some regular text. search the <a href="http://google.com">googles</a>. <span>and some span text</span>.
+        there is multiline input here as well.
+ 
