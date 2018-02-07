@@ -18,4 +18,4 @@ Links/info used, in no particular order
 * https://stackoverflow.com/questions/15350025/express-js-single-routing-handler-for-multiple-routes-in-a-single-line/37596851
 * https://pugjs.org/api/getting-started.html
 * http://knexjs.org/
-
+* https://alexdisler.com/2016/03/26/nodejs-environment-variables-elastic-beanstalk-aws/
